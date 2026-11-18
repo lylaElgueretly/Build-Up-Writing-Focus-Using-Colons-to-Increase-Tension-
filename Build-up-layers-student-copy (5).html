@@ -1,0 +1,532 @@
+<!doctype html>
+<html lang="en-GB"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Lists that build tension | Build-up guide</title>
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f3f6fb;--card:#fff;--ink:#16233f;--mute:#52607c;--line:#d5deee;--blue:#1d5fd1;--blueb:#e3edff;--orange:#b45309;--orangeb:#ffedd5;--green:#0f7a4d;--greenb:#d9f5e6;--purple:#7a35c4;--purpleb:#efe3fd;--hl:#ffe45c;--bad:#b42318;--badb:#fde4e1;font-family:"Atkinson Hyperlegible",system-ui,-apple-system,Arial,sans-serif;color:var(--ink);background:var(--bg)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){color-scheme:dark;--bg:#0e1526;--card:#172038;--ink:#e8eefc;--mute:#9fb0d3;--line:#2c3a5e;--blue:#7fb0ff;--blueb:#1b3260;--orange:#ffb066;--orangeb:#4a2d0f;--green:#5fdc9d;--greenb:#0f3a29;--purple:#c79bff;--purpleb:#35205a;--hl:#6b5b00;--bad:#ff9a8f;--badb:#4a1d19}}
+*{box-sizing:border-box}
+body{max-width:940px;margin:auto;padding:16px;background:var(--bg);font-size:1.04rem;line-height:1.5}
+h1{font-size:clamp(1.5rem,5vw,2.2rem);margin:.1em 0;line-height:1.15}
+h2{margin:0 0 4px;font-size:1.25rem;display:flex;gap:8px;flex-wrap:wrap;align-items:baseline;justify-content:space-between}
+h3{margin:12px 0 4px;font-size:1.05rem}
+.sub{color:var(--mute);margin:.2em 0}
+.part{margin:26px 0 6px;padding:6px 14px;border-radius:10px;background:var(--ink);color:var(--bg);font-weight:700;font-size:1.05rem}
+section{min-width:0;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px 16px;margin:10px 0;overflow-wrap:anywhere}
+section.done{border-color:var(--green);box-shadow:0 0 0 2px var(--greenb)}
+.tag{font-size:.8rem;font-weight:700;border-radius:99px;padding:0 10px;border:2px solid var(--mute);color:var(--mute);white-space:nowrap}
+.tag.core{border-color:var(--blue);color:var(--blue);background:var(--blueb)}
+.tag.build{border-color:var(--purple);color:var(--purple);background:var(--purpleb)}
+.tag.extend{border-color:var(--orange);color:var(--orange);background:var(--orangeb)}
+.task{background:var(--blueb);border-left:5px solid var(--blue);padding:6px 12px;border-radius:6px;margin:6px 0}
+.odile{background:var(--bg);border:1px solid var(--line);border-left:5px solid var(--green);border-radius:8px;padding:6px 12px;margin:6px 0;font-size:.98rem}
+.odile b{color:var(--green)}
+.frame{min-width:0;background:var(--purpleb);border:2px solid var(--purple);border-radius:8px;padding:6px 12px;margin:6px 0;overflow-wrap:anywhere;word-break:normal}
+.frame small{font-weight:700;color:var(--mute);margin-right:6px}
+details.bank{margin:6px 0;border:1px solid var(--line);border-radius:8px;padding:2px 10px;background:var(--bg)}
+details.bank summary{cursor:pointer;font-weight:700;color:var(--mute);font-size:.92rem}.idea-options{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px;min-width:0}.idea-options .wd{margin:0}
+.wd{font:inherit;font-size:.92rem;border:1px solid var(--purple);background:var(--card);color:var(--ink);border-radius:14px;padding:3px 9px;margin:2px;cursor:pointer;white-space:normal;max-width:100%;overflow-wrap:anywhere;line-height:1.25}
+.wd:hover{background:var(--hl);color:#16233f}
+.wd i{color:var(--mute);font-style:normal;font-size:.85em}
+textarea,input[type=text],select{width:100%;font:inherit;color:var(--ink);background:var(--bg);border:2px solid var(--line);border-radius:8px;padding:6px 8px}
+textarea{min-height:58px;resize:vertical}
+.row{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}.row>div{min-width:0}
+@media(max-width:700px){.row{grid-template-columns:1fr}}
+label.f{display:block;font-weight:700;font-size:.88rem;color:var(--mute);margin-bottom:2px}
+:focus-visible{outline:3px solid var(--blue);outline-offset:2px}
+.buttons{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+button{font:inherit;cursor:pointer;color:var(--ink)}
+button.action{border:2px solid transparent;border-radius:9px;background:var(--blue);color:var(--bg);padding:7px 14px;font-weight:700}
+button.secondary{background:var(--blueb);color:var(--blue);border-color:var(--blue)}
+button.submit{background:var(--green);color:var(--bg)}
+button.reveal{background:var(--orangeb);color:var(--orange);border-color:var(--orange)}
+button.danger{background:var(--badb);color:var(--bad);border-color:var(--bad)}
+button:disabled{opacity:.5;cursor:not-allowed}
+.hide{display:none!important}
+.feedback,.st{margin-top:6px;font-weight:700}
+.feedback:empty,.st:empty,.sfb:empty,.revealbox:empty{display:none}
+.feedback.good{color:var(--green)}
+.feedback.bad{color:var(--bad)}
+.st{font-size:.92rem;color:var(--green)}
+.st.warn{color:var(--orange)}
+.revealbox{background:var(--orangeb);border:2px solid var(--orange);border-radius:8px;padding:6px 12px;margin-top:8px}
+.sc{border:1px solid var(--line);border-radius:10px;padding:8px 10px;margin:8px 0;background:var(--bg)}
+.badge{display:inline-block;min-width:1.5em;text-align:center;font-weight:700;background:var(--ink);color:var(--bg);border-radius:6px;padding:0 5px;margin-right:4px;font-size:.85em}
+.chips{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px;min-width:0}
+.chip,.fchip{font:inherit;font-size:.92rem;border:2px solid var(--purple);background:var(--card);color:var(--ink);border-radius:14px;padding:4px 10px;cursor:pointer;white-space:normal;max-width:100%;min-width:0;overflow-wrap:anywhere;line-height:1.25;text-align:left}
+.chip[aria-pressed=true],.fchip[aria-pressed=true]{background:var(--purple);color:var(--bg)}
+.chip[aria-pressed=true]::before,.fchip[aria-pressed=true]::before{content:"✓ "}
+.sfb{margin-top:6px;font-size:.95rem}
+.sfb.good{color:var(--green)}.sfb.bad{color:var(--bad);font-weight:700}
+.tok{cursor:pointer;border-radius:4px;padding:0 1px}
+.tok:hover{background:var(--hl);color:#16233f}
+.tok[data-n]{background:var(--purpleb);text-underline-offset:3px}
+.tok[data-n]::after{content:attr(data-n);font-size:.65em;vertical-align:super;font-weight:700;margin-left:1px}
+.tok[data-n="1"]{text-decoration:underline solid}
+.tok[data-n="2"]{text-decoration:underline dashed}
+.tok[data-n="3"]{text-decoration:underline dotted;text-decoration-thickness:2px}
+.tok[data-n="4"]{text-decoration:underline double}
+.tok[data-n="5"]{text-decoration:underline wavy}
+mark{background:var(--hl);color:#16233f;border-radius:3px;padding:0 2px}
+.listbox{background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:10px 12px;margin:8px 0;line-height:1.9}
+.orig{min-width:0;background:var(--bg);border:2px solid var(--green);border-radius:12px;padding:10px 14px;line-height:1.8;overflow-wrap:anywhere}
+.placeholder{border:2px dashed var(--orange);border-radius:10px;padding:10px 14px;background:var(--orangeb);color:var(--orange);font-weight:700}
+.cmp{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+@media(max-width:700px){.cmp{grid-template-columns:1fr}}
+.cmp>div{min-width:0;background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:8px 12px;white-space:pre-wrap;overflow-wrap:anywhere}
+table.cheat{width:100%;border-collapse:collapse;font-size:.93rem}
+table.cheat th,table.cheat td{border:1px solid var(--line);padding:4px 8px;text-align:left;vertical-align:top}
+table.cheat th{background:var(--blueb);color:var(--blue)}
+.lesson-card{position:fixed;top:12px;right:12px;width:min(270px,calc(100vw - 24px));z-index:10;background:var(--blueb);border:2px solid var(--blue);border-radius:14px;padding:10px 12px;font-size:.86rem;line-height:1.3;max-height:calc(100vh - 24px);overflow:auto}
+.lesson-card strong{display:block;margin:6px 0 2px}
+.lesson-card p{margin:0 0 6px}
+.lesson-card label{display:flex;align-items:flex-start;gap:6px;margin:4px 0;cursor:pointer;min-width:0;overflow-wrap:anywhere}.lesson-card label span{min-width:0;overflow-wrap:anywhere}
+.lesson-card input{margin:2px 0 0;accent-color:var(--green)}
+.lesson-card label:has(input:checked){text-decoration:line-through;color:var(--mute)}
+.lesson-card .lv{font-weight:700;font-size:.75rem;color:var(--mute);margin-top:4px}
+@media(min-width:1000px){body{padding-right:300px;max-width:1240px}}
+@media(max-width:999px){.lesson-card{position:sticky;top:5px;width:auto;margin:5px 0 10px;max-height:30vh}}
+@media(max-width:600px){body{padding:10px}section{padding:12px}}
+.prog{font-weight:700;color:var(--mute)}
+body.noscaf .scaf{display:none}
+details.teacher{display:none;background:var(--card);border:1px dashed var(--mute);border-radius:12px;padding:10px 14px;margin:18px 0}
+body.tmode details.teacher{display:block}
+@media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important}}
+@media print{.lesson-card,.buttons,details.teacher{display:none}}
+</style></head><body>
+<header><h1>Lists that build tension</h1><p class="sub">Build-up · Adventure stories. Use Odile’s paragraph as a model, borrow the writing moves, then build your own.</p>
+<p class="prog" id="prog" aria-live="polite">Submitted: 0 of 10</p></header>
+
+<aside class="lesson-card" aria-label="Lesson objective and success criteria"><strong style="margin-top:0">Lesson objective</strong><p>To build tension by layering sensory detail in a list introduced by a colon.</p>
+<p>Use the list to make the reader experience a build-up: each detail adds to the tension.</p><strong>Success criteria</strong>
+<div class="lv">CORE</div>
+<label><input type="checkbox" data-save="sc1"><span>I can write a simple sentence that counts my layers or signs.</span></label>
+<label><input type="checkbox" data-save="sc2"><span>I can use a colon, then list the details with commas and <i>and</i>.</span></label>
+<label><input type="checkbox" data-save="sc3"><span>I can add a describing word before each noun.</span></label>
+<div class="lv">BUILD</div>
+<label><input type="checkbox" data-save="sc4"><span>I can start with a hint that something is wrong.</span></label>
+<div class="lv">EXTEND</div>
+<label><input type="checkbox" data-save="sc6"><span>I can use hyphenated adjectives, possessive phrases and a semicolon to organise my list.</span></label>
+</aside>
+
+<section><h2>Your details</h2>
+<div class="row" style="grid-template-columns:1fr 1fr"><div><label class="f" for="sn">First name</label><input type="text" id="sn" data-save="name" autocomplete="off"></div><div><label class="f" for="sc">Class (for example 7B)</label><input type="text" id="sc" data-save="class" autocomplete="off"></div></div>
+<p style="margin:6px 0 0;color:var(--mute);font-size:.92rem">Submit your first attempt whenever you are ready. You can press <b>Check</b> before or after submitting to get feedback. Each new version is saved as a separate attempt, so your teacher can see what changed. Press <b>Hint</b> any time. <b>Reveal</b> opens after you submit. Your work is saved on this device until you press <b>Clear all answers</b>.</p>
+<div class="buttons"><button class="action secondary" id="loadBtn">Load my saved work (at home or on another device)</button><button class="action secondary" id="scafToggle" aria-pressed="false">Challenge me: hide the scaffolds</button></div>
+<div class="feedback" id="loadFb" aria-live="polite"></div></section>
+
+<div class="part">Part 1 · Use Odile’s paragraph as a model</div>
+<section id="readsec"><div class="task">Read the paragraph. Notice how the writer builds up the description. You will borrow the structure, then invent your own details and situation.</div>
+<div class="orig" id="orig"></div>
+</section>
+
+<div class="part">Part 2 · Find the moves, then make them yours</div>
+<section id="blueprint"><h2>Find the moves <span class="tag build">YOUR TURN</span></h2>
+<div class="task">Tap the sentence that best fits each prompt. Trust your reading; there may be more than one reasonable interpretation.</div>
+<div id="discover"></div>
+<p style="margin:8px 0 4px"><b>Now make it yours:</b> What might your character notice, and what do you want the reader to feel?</p>
+<div class="row"><div><label class="f" for="bridge_notice">Your character might notice…</label><input id="bridge_notice" type="text" data-save="bridgeNotice" placeholder="A smell, sound, sight or touch clue…"></div><div><label class="f" for="bridge_effect">You want the reader to feel…</label><input id="bridge_effect" type="text" data-save="bridgeEffect" placeholder="Uneasy, curious, suspicious…"></div></div>
+<div id="id1list" class="hide" aria-hidden="true"></div></section>
+
+<section id="secid2" data-key="id2"><h2>Now zoom in: how does the list work? <span class="tag core">GRAMMAR</span></h2>
+<div class="task">Now investigate the sentence-level tools inside the list. Pick a feature, tap the words that show it, and consider how you could use that tool to create your intended effect.</div>
+<div class="chips" id="fchips" role="group" aria-label="Grammar features"></div>
+<div class="listbox" id="id2text"></div>
+<div class="buttons"><button class="action" data-check="id2">1. Check</button><button class="action submit" data-submit="id2" disabled>2. Submit</button><button class="action secondary" data-hint="id2">Hint</button><button class="action reveal hide" data-reveal="id2">Reveal</button></div>
+<div class="st" id="stid2" aria-live="polite"></div><div class="feedback" id="fbid2" aria-live="polite"></div><div id="id2info"></div><div class="revealbox hide" id="rvid2"></div></section>
+
+<section><details><summary><b>Cheat sheet: grammar and its impact on the reader</b></summary>
+<table class="cheat"><tr><th>Technique</th><th>Grammar</th><th>Impact on the reader</th></tr>
+<tr><td>Hint sentence</td><td>Simple sentence naming a sense</td><td>Warns the reader before the character understands.</td></tr>
+<tr><td>Very short sentence</td><td>Subject and verb, a few words</td><td>Makes the story pause, so the reader holds their breath.</td></tr>
+<tr><td>Count sentence</td><td>Simple sentence with a number</td><td>Tells the reader how much is coming, so they wait for it.</td></tr>
+<tr><td>Colon</td><td>Punctuation after a complete sentence</td><td>Promises detail and makes the reader wait for it.</td></tr>
+<tr><td>List with commas and <i>and</i></td><td>Items split by commas, <i>and</i> before the last</td><td>Piles detail on detail, layer by layer, so there is no escape.</td></tr>
+<tr><td>Describing words</td><td>Adjective before a noun</td><td>Makes every layer specific and unpleasant.</td></tr>
+<tr><td>Hyphenated adjective</td><td>Words joined to describe one noun</td><td>Packs a whole description into one word, so the list feels crowded.</td></tr>
+<tr><td>Possessive phrase</td><td>Noun + ’s shows who it belongs to</td><td>Ties a layer to a real creature or person, so it feels close.</td></tr>
+<tr><td>Semicolon</td><td>Splits a long list into two groups</td><td>Gives a short breath, then the list starts again.</td></tr>
+</table></section>
+
+<div class="part">Part 3 · Build your own</div>
+<div id="steps"><noscript><p class="task">This preview shows the writing steps, but its interactive checks, idea-bank selection, answer reveals and saving need JavaScript. Open the downloaded file in Safari or another full browser to use those features.</p></noscript><section id="step1" data-key="1"><h2><span>Step 1: Choose your hero, your place and one sense</span><span class="tag build">BUILD</span></h2><div class="task">Invent your own character and situation. Choose which sense gives the first warning; this choice will shape what your reader notices.</div><div class="odile hide" id="od1"></div><div class="row"><div><label class="f" for="hero_name">Choose or invent a hero</label><input type="text" id="hero_name" data-save="hero" placeholder="Type your own idea"></div><div><label class="f" for="hero_place">Choose or invent a place</label><input type="text" id="hero_place" data-save="place" placeholder="Type your own idea"></div><div><label class="f" for="hero_sense">Choose the first warning</label><select id="hero_sense" data-save="sense"><option value="">Choose a sense</option><option value="sound">sound / noise</option><option value="sight">sight / chaos</option><option value="touch">touch / discomfort</option></select></div></div><details class="bank scaf"><summary>Optional idea bank · click a word to use it</summary><p style="margin:5px 0"><b>Heroes:</b> <button type="button" class="wd" data-pick="hero_name" data-value="Mina">Mina</button><button type="button" class="wd" data-pick="hero_name" data-value="A young explorer">a young explorer</button><button type="button" class="wd" data-pick="hero_name" data-value="Sam">Sam</button><button type="button" class="wd" data-pick="hero_name" data-value="The lighthouse keeper">the lighthouse keeper</button></p><p style="margin:5px 0"><b>Places:</b> <button type="button" class="wd" data-pick="hero_place" data-value="an empty station">an empty station</button><button type="button" class="wd" data-pick="hero_place" data-value="a forest at dusk">a forest at dusk</button><button type="button" class="wd" data-pick="hero_place" data-value="an old house">an old house</button><button type="button" class="wd" data-pick="hero_place" data-value="a boat in thick fog">a boat in thick fog</button></p><p style="margin:5px 0"><b>Senses:</b> <button type="button" class="wd" data-pick="hero_sense" data-value="sound">sound / noise</button><button type="button" class="wd" data-pick="hero_sense" data-value="sight">sight / chaos</button><button type="button" class="wd" data-pick="hero_sense" data-value="touch">touch / discomfort</button></p></details><div class="buttons"><button type="button" class="action" data-check="1">1. Check</button><button type="button" class="action submit" data-submit="1" disabled>2. Submit</button><button type="button" class="action secondary" data-hint="1">Hint</button><button type="button" class="action reveal hide" data-reveal="1">Reveal answer</button></div><div class="st" id="st1" aria-live="polite"></div><div class="feedback" id="fb1" aria-live="polite"></div><div class="revealbox hide" id="rv1"></div></section>
+<section id="step2" data-key="2"><h2><span>Step 2: Write a hint sentence</span><span class="tag build">BUILD</span></h2><div class="task">Write one sentence naming the first sign that something was wrong in your chosen track.</div><div class="odile hide" id="od2"></div><div class="frame scaf"><small>SCAFFOLD</small>The first hint that something was wrong was the ___.</div><details class="bank scaf"><summary>Optional idea bank · click a word to use it</summary><div id="bank2"></div><noscript><p>For track-specific word ideas and the interactive writing tools, open this file in Safari or another browser. This preview still shows the writing frame and task.</p></noscript></details><textarea id="s2" data-save="s2" aria-label="Your answer for step 2" placeholder="Write here…"></textarea><div class="buttons"><button type="button" class="action" data-check="2">1. Check</button><button type="button" class="action submit" data-submit="2" disabled>2. Submit</button><button type="button" class="action secondary" data-hint="2">Hint</button><button type="button" class="action reveal hide" data-reveal="2">Reveal answer</button></div><div class="st" id="st2" aria-live="polite"></div><div class="feedback" id="fb2" aria-live="polite"></div><div class="revealbox hide" id="rv2"></div></section>
+<section id="step3" data-key="3"><h2><span>Step 3: Write one very short sentence</span><span class="tag build">BUILD</span></h2><div class="task">After the warning, give the reader a brief pause. Show your hero reacting to the sense in a very short sentence.</div><div class="odile hide" id="od3"></div><div class="frame scaf"><small>SCAFFOLD</small>(Hero) ___.</div><details class="bank scaf"><summary>Optional idea bank · click a word to use it</summary><div id="bank3"></div><noscript><p>For track-specific word ideas and the interactive writing tools, open this file in Safari or another browser. This preview still shows the writing frame and task.</p></noscript></details><textarea id="s3" data-save="s3" aria-label="Your answer for step 3" placeholder="Write here…"></textarea><div class="buttons"><button type="button" class="action" data-check="3">1. Check</button><button type="button" class="action submit" data-submit="3" disabled>2. Submit</button><button type="button" class="action secondary" data-hint="3">Hint</button><button type="button" class="action reveal hide" data-reveal="3">Reveal answer</button></div><div class="st" id="st3" aria-live="polite"></div><div class="feedback" id="fb3" aria-live="polite"></div><div class="revealbox hide" id="rv3"></div></section>
+<section id="step4" data-key="4"><h2><span>Step 4: Say how many layers there are</span><span class="tag core">CORE</span></h2><div class="task">Write a simple sentence that counts the details in your chosen track.</div><div class="odile hide" id="od4"></div><div class="frame scaf"><small>SCAFFOLD</small>There were ___ layers / signs of ___.</div><details class="bank scaf"><summary>Optional idea bank · click a word to use it</summary><div id="bank4"></div><noscript><p>For track-specific word ideas and the interactive writing tools, open this file in Safari or another browser. This preview still shows the writing frame and task.</p></noscript></details><textarea id="s4" data-save="s4" aria-label="Your answer for step 4" placeholder="Write here…"></textarea><div class="buttons"><button type="button" class="action" data-check="4">1. Check</button><button type="button" class="action submit" data-submit="4" disabled>2. Submit</button><button type="button" class="action secondary" data-hint="4">Hint</button><button type="button" class="action reveal hide" data-reveal="4">Reveal answer</button></div><div class="st" id="st4" aria-live="polite"></div><div class="feedback" id="fb4" aria-live="polite"></div><div class="revealbox hide" id="rv4"></div></section>
+<section id="step5" data-key="5"><h2><span>Step 5: Add the colon and list the layers</span><span class="tag core">CORE</span></h2><div class="task">Add a colon, then list the details from least alarming to most alarming. Separate them with commas and put “and” before the last.</div><div class="odile hide" id="od5"></div><div class="frame scaf"><small>SCAFFOLD</small>There were ___ layers / signs of ___: a ___, a ___, a ___, a ___, a ___, a ___ and a ___.</div><details class="bank scaf"><summary>Optional idea bank · click a word to use it</summary><div id="bank5"></div><noscript><p>For track-specific word ideas and the interactive writing tools, open this file in Safari or another browser. This preview still shows the writing frame and task.</p></noscript></details><div class="buttons"><button type="button" class="action secondary" data-prev="5">Start from my last version</button></div><textarea id="s5" data-save="s5" aria-label="Your answer for step 5" placeholder="Write here…"></textarea><div class="buttons"><button type="button" class="action" data-check="5">1. Check</button><button type="button" class="action submit" data-submit="5" disabled>2. Submit</button><button type="button" class="action secondary" data-hint="5">Hint</button><button type="button" class="action reveal hide" data-reveal="5">Reveal answer</button></div><div class="st" id="st5" aria-live="polite"></div><div class="feedback" id="fb5" aria-live="polite"></div><div class="revealbox hide" id="rv5"></div></section>
+<section id="step6" data-key="6"><h2><span>Step 6: Add a describing word before each noun</span><span class="tag core">CORE</span></h2><div class="task">Make each layer stronger with a describing word before the noun. Make the words get stronger as the list goes on.</div><div class="odile hide" id="od6"></div><div class="frame scaf"><small>SCAFFOLD</small>a ___ (describing word) ___ (noun)</div><details class="bank scaf"><summary>Optional idea bank · click a word to use it</summary><div id="bank6"></div><noscript><p>For track-specific word ideas and the interactive writing tools, open this file in Safari or another browser. This preview still shows the writing frame and task.</p></noscript></details><div class="buttons"><button type="button" class="action secondary" data-prev="6">Start from my last version</button></div><textarea id="s6" data-save="s6" aria-label="Your answer for step 6" placeholder="Write here…"></textarea><div class="buttons"><button type="button" class="action" data-check="6">1. Check</button><button type="button" class="action submit" data-submit="6" disabled>2. Submit</button><button type="button" class="action secondary" data-hint="6">Hint</button><button type="button" class="action reveal hide" data-reveal="6">Reveal answer</button></div><div class="st" id="st6" aria-live="polite"></div><div class="feedback" id="fb6" aria-live="polite"></div><div class="revealbox hide" id="rv6"></div></section>
+<section id="step7" data-key="7"><h2><span>Step 7: Use a hyphenated adjective</span><span class="tag extend">EXTEND</span></h2><div class="task">In the first three details, use hyphenated adjectives before the nouns.</div><div class="odile hide" id="od7"></div><div class="frame scaf"><small>SCAFFOLD</small>a ___-___-___ ___</div><details class="bank scaf"><summary>Optional idea bank · click a word to use it</summary><div id="bank7"></div><noscript><p>For track-specific word ideas and the interactive writing tools, open this file in Safari or another browser. This preview still shows the writing frame and task.</p></noscript></details><div class="buttons"><button type="button" class="action secondary" data-prev="7">Start from my last version</button></div><textarea id="s7" data-save="s7" aria-label="Your answer for step 7" placeholder="Write here…"></textarea><div class="buttons"><button type="button" class="action" data-check="7">1. Check</button><button type="button" class="action submit" data-submit="7" disabled>2. Submit</button><button type="button" class="action secondary" data-hint="7">Hint</button><button type="button" class="action reveal hide" data-reveal="7">Reveal answer</button></div><div class="st" id="st7" aria-live="polite"></div><div class="feedback" id="fb7" aria-live="polite"></div><div class="revealbox hide" id="rv7"></div></section>
+<section id="step8" data-key="8"><h2><span>Step 8: Use possessive phrases</span><span class="tag extend">EXTEND</span></h2><div class="task">In the last four details, use possessive phrases to show whose each detail is.</div><div class="odile hide" id="od8"></div><div class="frame scaf"><small>SCAFFOLD</small>a ___’s ___</div><details class="bank scaf"><summary>Optional idea bank · click a word to use it</summary><div id="bank8"></div><noscript><p>For track-specific word ideas and the interactive writing tools, open this file in Safari or another browser. This preview still shows the writing frame and task.</p></noscript></details><div class="buttons"><button type="button" class="action secondary" data-prev="8">Start from my last version</button></div><textarea id="s8" data-save="s8" aria-label="Your answer for step 8" placeholder="Write here…"></textarea><div class="buttons"><button type="button" class="action" data-check="8">1. Check</button><button type="button" class="action submit" data-submit="8" disabled>2. Submit</button><button type="button" class="action secondary" data-hint="8">Hint</button><button type="button" class="action reveal hide" data-reveal="8">Reveal answer</button></div><div class="st" id="st8" aria-live="polite"></div><div class="feedback" id="fb8" aria-live="polite"></div><div class="revealbox hide" id="rv8"></div></section>
+<section id="step9" data-key="9"><h2><span>Step 9: Use a semicolon between two groups</span><span class="tag extend">EXTEND</span></h2><div class="task">Split your list into two groups with a semicolon.</div><div class="odile hide" id="od9"></div><div class="frame scaf"><small>SCAFFOLD</small>…, …, …; …, … and …</div><div class="buttons"><button type="button" class="action secondary" data-prev="9">Start from my last version</button></div><textarea id="s9" data-save="s9" aria-label="Your answer for step 9" placeholder="Write here…"></textarea><div class="buttons"><button type="button" class="action" data-check="9">1. Check</button><button type="button" class="action submit" data-submit="9" disabled>2. Submit</button><button type="button" class="action secondary" data-hint="9">Hint</button><button type="button" class="action reveal hide" data-reveal="9">Reveal answer</button></div><div class="st" id="st9" aria-live="polite"></div><div class="feedback" id="fb9" aria-live="polite"></div><div class="revealbox hide" id="rv9"></div></section></div>
+
+<section id="together"><h2>Put it together <span class="tag">Read it back</span></h2>
+<div class="task">Your best sentences are joined in order. Read it aloud. Does each layer feel worse than the one before? Change anything that does not.</div>
+<div class="buttons"><button class="action" id="joinBtn">Join my steps</button></div>
+<textarea id="final" style="min-height:130px;margin-top:8px" aria-label="Your final paragraph" data-save="final" placeholder="Press Join my steps, then edit here…"></textarea>
+<div class="buttons"><button class="action submit" id="finalSubmit">Submit my paragraph</button></div>
+<div class="st" id="stFinal" aria-live="polite"></div><div class="feedback" id="finalFb" aria-live="polite"></div>
+<div id="modelEnd" class="hide"><h3>Three complete model answers</h3><p>Now compare your submitted paragraph with these original sight, sound and touch versions. Look for ideas you might adapt—not lines to copy.</p><div id="fullModels"></div></div>
+<h3>Compare with Odile’s</h3>
+<div class="cmp"><div><b>Mine</b><br><span id="cmpMine"></span></div><div><b>Odile’s</b><br><span id="cmpOdile"></span></div></div>
+<h3>Did you do these too?</h3><ul style="list-style:none;padding:0;margin:0" id="spot"></ul></section>
+
+<section id="exit"><h2>Exit ticket <span class="tag">2 minutes</span></h2>
+<p style="margin:2px 0"><b>Today’s objective:</b> to build tension by layering sensory detail in a list introduced by a colon.</p>
+<p style="margin:2px 0"><b>Success criteria:</b> tick the writing moves you used in your own paragraph. Then answer these.</p>
+<div id="exitq"></div>
+<p style="margin:10px 0 4px"><b>3.</b> Which writing move did you use to make your reader feel tension? Explain the effect you wanted it to have.</p>
+<textarea id="ex3" style="min-height:50px" data-save="ex3" placeholder="I used… so that my reader would…"></textarea>
+<p style="margin:10px 0 4px"><b>4.</b> How confident are you about using a colon to introduce a list and building tension with the details that follow?</p>
+<div class="buttons" role="radiogroup" aria-label="Confidence">
+<label><input type="radio" name="conf" value="1" data-save="conf1"> Not yet</label>
+<label><input type="radio" name="conf" value="2" data-save="conf2"> Nearly</label>
+<label><input type="radio" name="conf" value="3" data-save="conf3"> Yes</label></div>
+<div class="buttons"><button class="action submit" id="exitSubmit">Submit exit ticket</button></div>
+<div class="feedback" id="exitFb" aria-live="polite"></div></section>
+
+<section id="mywork"><h2>My work</h2>
+<p style="margin:2px 0">Your answers are saved on this device as you type.</p>
+<div class="buttons"><button class="action secondary" id="copyBtn">Copy my answers</button><button class="action danger" id="clearBtn">Clear all answers</button></div>
+<div class="feedback" id="sendFb" aria-live="polite"></div>
+<textarea id="copyBox" readonly style="display:none;min-height:150px;margin-top:8px" aria-label="Answers to copy"></textarea></section>
+
+<details class="teacher"><summary><b>Teacher setup</b> (not for students)</summary>
+<p>1. Paste the model paragraph you are teaching from.<br>2. Create and deploy the companion Apps Script as a web app; paste its URL ending in /exec below.<br>3. Press Preview, then Save a student copy and give students that file. Each answer is stored in its own column on the Responses sheet.</p>
+<label class="f" for="modelin">Odile’s paragraph</label><textarea id="modelin" aria-label="Odile paragraph" style="min-height:110px">The first hint that something was wrong was the smell. Odile sniffed. There were seven layers of scent, none of them good: a between-the-toe smell, a week-old-fish smell, an unbrushed-tooth smell; a jackdaw’s breath, a cat’s sick pool, a burnt furball and a sailor’s earwax.</textarea>
+<label class="f" for="rolesin" style="margin-top:8px">Optional: correct the job of each sentence, in order, separated by commas (hint, short, list, threat, other). Use this only if the Preview guessed wrong.</label><input type="text" id="rolesin" placeholder="for example: hint,short,list,threat">
+<label class="f" for="urlin" style="margin-top:8px">Google web app URL</label><input type="text" id="urlin" placeholder="https://script.google.com/macros/s/…/exec">
+<div class="buttons"><button class="action secondary" id="previewBtn">Preview with this text</button><button class="action secondary" id="saveCopy">Save a student copy</button></div>
+<div class="feedback" id="teacherFb"></div></details>
+
+<script>
+const PRISTINE='<!doctype html>\n'+document.documentElement.outerHTML;
+/* Teacher: use the Teacher setup box at the bottom of the page, or paste between the backticks and quotes below. */
+const MODEL_TEXT=`The first hint that something was wrong was the smell. Odile sniffed. There were seven layers of scent, none of them good: a between-the-toe smell, a week-old-fish smell, an unbrushed-tooth smell; a jackdaw’s breath, a cat’s sick pool, a burnt furball and a sailor’s earwax.`;
+const SHEET_URL="https://script.google.com/macros/s/AKfycbxsoJsjfZFpJ4Y6uAFk3bJ_47ivWelIULe6ZocqvxvtoMUg3FivO5GoWkxmyr_wvUWX/exec";
+const ROLES_OVERRIDE="";
+const ASSIGNMENT="Build-up layers";
+if(location.hash==='#teacher')document.body.classList.add('tmode');
+const $=(s,r=document)=>r.querySelector(s),$$=(s,r=document)=>[...r.querySelectorAll(s)];
+const esc=t=>String(t).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const words=t=>t.trim().split(/\s+/).filter(Boolean);
+const NUM={two:2,three:3,four:4,five:5,six:6,seven:7,eight:8,nine:9,ten:10,eleven:11,twelve:12};
+const SENSE={sound:/sound|noise|screech|whistle|rattle|squeak|creak|scream|cry/i,sight:/sight|chaos|disorder|mess|movement|shadow|light|glow/i,touch:/touch|discomfort|cold|heat|rough|texture|pressure|tingle|prickle|clammy|icy/i};
+const STEP_IDEAS={hint:['noise','chaos','discomfort'],reaction:['stopped','froze','flinched'],count:['seven','six','five'],hyphen:['wind','rattled','high','pitched','floor','strewn','needle','sharp','skin','prickling'],possessive:['stationmaster','train','passenger','child','visitor','burglar','stranger','spider','corpse','creature'],groups:['first three details','last four details','semicolon'],threat:['Run','Intruder','Help']};
+const BANK={
+ sound:{ideas:['wind-rattled window','high-pitched hinge squeak','hollow-sounding floorboard groan','stationmaster’s whistle','train’s warning screech','passenger’s scream','child’s cry'],desc:[['wind-rattled','shaken by the wind'],['high-pitched','very high in tone'],['hollow-sounding','echoing and empty'],['panicked','frightened'],['warning','signalling danger'],['desperate','urgently afraid'],['blood-curdling','terrifying']]},
+ sight:{ideas:['half-open door','paint-splattered wall','floor-strewn room','child’s scattered toys','visitor’s muddy footprints','burglar’s overturned drawers','stranger’s bloodied handprint'],desc:[['half-open','partly ajar'],['paint-splattered','marked with drops of paint'],['floor-strewn','scattered across the floor'],['scattered','spread untidily'],['muddy','covered in mud'],['overturned','upset or tipped over'],['bloodied','marked with blood']]},
+ touch:{ideas:['frost-cold banister','needle-sharp splinter','skin-prickling draught','spider’s bristling legs','stranger’s clammy sleeve','corpse’s icy fingers','creature’s hot breath'],desc:[['frost-cold','bitterly cold'],['needle-sharp','sharp like a needle'],['skin-prickling','making the skin tingle'],['bristling','stiff and prickly'],['clammy','cold and damp'],['icy','like ice'],['hot','warm in an alarming way']]}
+};
+const STEP_SENSE_IDEAS={
+ sound:{hint:['noise','rattle','rumble'],reaction:['stopped','listened','froze','turned'],count:['seven','six','five'],hyphen:['wind','rattled','high','pitched','hollow','sounding'],possessive:['stationmaster','train','passenger','child'],groups:[';'],threat:['Run','Help','Train']},
+ sight:{hint:['chaos','disorder','mess'],reaction:['froze','stared','backed','glanced'],count:['seven','six','five'],hyphen:['paint','splattered','floor','strewn','half','open'],possessive:['child','visitor','burglar','stranger'],groups:[';'],threat:['Intruder','Burglar','Someone']},
+ touch:{hint:['discomfort','cold','tingling'],reaction:['flinched','jerked','withdrew','shivered'],count:['seven','six','five'],hyphen:['frost','cold','needle','sharp','skin','prickling'],possessive:['spider','stranger','corpse','creature'],groups:[';'],threat:['Intruder','Claws','Help']}
+};
+const getSense=()=>($('#hero_sense')?.value)||'sound';
+const stated=()=>{const t=($('#s4')?.value||'').toLowerCase();const m=t.match(/\b(\d+|two|three|four|five|six|seven|eight|nine|ten|eleven|twelve)\b/);return m?(NUM[m[1]]||+m[1]):null};
+function listPart(t){const i=t.indexOf(':');return i<0?'':t.slice(i+1)}
+function items(t){let l=listPart(t).replace(/[.!]+\s*$/,'');l=l.replace(/;/g,',').replace(/\s+and\s+(?=[^,]*$)/i,', ');return l.split(',').map(x=>x.trim()).filter(Boolean)}
+/* ---------- Odile's text: parsed at run time from the pasted paragraph ---------- */
+let ODILE=MODEL_TEXT.trim(),SENTS=[],ROLES=[],GRAMS=new Set();
+function splitSentences(t){const s=t.replace(/\s+/g,' ').trim(),out=[];let cur='';
+ for(let i=0;i<s.length;i++){cur+=s[i];
+  if(/[.!?]/.test(s[i])&&!/[.!?]/.test(s[i+1]||'')){let j=i+1;while(j<s.length&&/['’”"]/.test(s[j])){cur+=s[j];j++}
+   const rest=s.slice(j).trimStart();
+   if(!rest||/^[A-Z‘“"']/.test(rest)){out.push(cur.trim());cur='';i=j-1;continue}
+   i=j-1}}
+ if(cur.trim())out.push(cur.trim());return out}
+function detectRoles(S){const R=S.map(()=>'other');const li=S.findIndex(x=>x.includes(':'));const end=li<0?S.length:li;
+ if(S.length&&end>0)R[0]='hint';
+ let best=-1,bw=99;for(let i=1;i<end;i++){const n=words(S[i]).length;if(n<bw){bw=n;best=i}}if(best>0&&bw<=6)R[best]='short';
+ if(li>=0){R[li]='list';for(let i=li+1;i<S.length;i++){if(/^\s*[‘“"']/.test(S[i])||/["“]/.test(S[i])){R[i]='threat';break}}}
+ return R}
+const norm=t=>t.toLowerCase().replace(/[^a-z0-9’'\- ]+/g,' ').split(/\s+/).filter(Boolean);
+function buildGrams(){GRAMS=new Set();const w=norm(ODILE);for(let i=0;i+8<=w.length;i++)GRAMS.add(w.slice(i,i+8).join(' '))}
+function copied(t){const w=norm(t);for(let i=0;i+8<=w.length;i++)if(GRAMS.has(w.slice(i,i+8).join(' ')))return true;return false}
+const sentOf=r=>{const i=ROLES.indexOf(r);return i<0?null:SENTS[i]};
+const ROLE_OPTS=[['hint','It hints that something is wrong'],['short','It is a very short sentence'],['list','It says how many layers, then a colon and a list'],['other','Something else']];
+const ROLE_LABEL=Object.fromEntries(ROLE_OPTS);
+const ROLE_INFO={
+ hint:'Grammar: a simple sentence that names the sense. Impact: the reader is warned before the character understands, so they start to worry.',
+ short:'Grammar: a very short sentence, subject and verb. Impact: after a longer sentence it makes the story pause, so the reader holds their breath.',
+ list:'Grammar: a simple sentence, a colon, then a list of layers. Impact: each layer is added on top of the last, so the pressure builds with no escape.',
+ threat:'Grammar: direct speech, one word in speech marks, comma inside, then a speech verb. Impact: after all the build-up, the danger is named quietly, which can be more frightening than a shout.',
+ other:'This sentence does not do one of the four main jobs. Look again at its length and punctuation.'};
+const FEATS=[
+ {id:'colon',n:1,name:'Colon',hint:'Find the punctuation that comes after a complete sentence and before the list.',info:'Grammar: colon after a complete sentence. Impact: it promises detail and makes the reader wait for it.'},
+ {id:'semi',n:2,name:'Semicolon',hint:'Find the mark that splits the list into two groups.',info:'Grammar: semicolon splitting a long list. Impact: a short breath, then the list starts again with a new pattern.'},
+ {id:'hyph',n:3,name:'Hyphenated adjective',hint:'Look for words joined with hyphens before a noun.',info:'Grammar: hyphenated adjective. Impact: a whole description in one word, so the list feels crowded.'},
+ {id:'poss',n:4,name:'Possessive',hint:'Look for a word ending in ’s that shows who something belongs to.',info:'Grammar: possessive noun. Impact: it ties the layer to a real creature or person, so it feels close.'},
+ {id:'and',n:5,name:'“and” before the last layer',hint:'Find the small word just before the final item.',info:'Grammar: “and” before the last item. Impact: the last layer lands with weight and closes the list.'}];
+function featuresOf(toks){const f={colon:[],semi:[],hyph:[],poss:[],and:[]};let colonSeen=false,lastAnd=-1;
+ toks.forEach((t,k)=>{const c=t.replace(/^[^\w’']+|[^\w’']+$/g,'');
+  if(t===':'){if(!f.colon.length)f.colon.push(k);colonSeen=true}
+  else if(t===';')f.semi.push(k);
+  else if(/^[\w’']+(?:-[\w’']+)+$/.test(c))f.hyph.push(k);
+  else if(/^[A-Za-z]+[’']s$/.test(c)&&!/^(it|he|she|that|there|what|who|let|here|how|where|when)[’']s$/i.test(c))f.poss.push(k);
+  if(colonSeen&&c.toLowerCase()==='and')lastAnd=k});
+ if(lastAnd>=0)f.and.push(lastAnd);return f}
+const partsOf=s=>s.split(/(\s+|[:;])/).filter(x=>x!=='');
+const isSp=p=>/^\s+$/.test(p);
+/* ---------- the ten steps ---------- */
+const STEPS=[
+{lv:'build',t:'Choose your hero, your place and one sense',task:'Invent your own character and situation. Choose which sense gives the first warning; this choice will shape what your reader notices.',hint:'Choose any character and place that suit your story. Then choose sound (noise), sight (chaos), or touch (discomfort) for the first warning. The ideas below are optional starting points, not answers.',reveal:'A full answer has all three parts: a hero, a place that could feel dangerous, and one route: sound/noise, sight/chaos, or touch/discomfort.',custom:true},
+{lv:'build',t:'Write a hint sentence',bank:'hint',task:'Write one sentence naming the first sign that something was wrong in your chosen track.',frame:'The first hint that something was wrong was the ___.',hint:'Choose a focus word that matches your route: noise, chaos or cold.',reveal:'A full answer is one complete sentence of six words or more. It names your sense as the first sign that something is wrong, and it ends with a full stop.',
+ check:t=>{const s=SENSE[getSense()];if(words(t).length<6)return{ok:false,msg:'Write a full sentence of at least six words.'};if(!s.test(t))return{ok:false,msg:'Use the focus word for your chosen track: noise, chaos or discomfort.'};if(!/[.!]\s*$/.test(t.trim()))return{ok:false,msg:'End your sentence with a full stop.'};return{ok:true,msg:'Good: your sentence names the sense and ends with a full stop.'}}},
+{lv:'build',t:'Write one very short sentence',bank:'reaction',task:'After the warning, give the reader a brief pause. Show your hero reacting to the sense in a very short sentence.',frame:'(Hero) ___.',hint:'Choose a brief reaction that fits the character and scene: stopped, froze or flinched.',reveal:'A full answer is two to five words: your character plus a precise reaction. End with a full stop so the reader pauses before the list begins.',
+ check:t=>{const n=words(t).length;if(n<2)return{ok:false,msg:'Add the hero’s name and a verb.'};if(n>5)return{ok:false,msg:'Make it shorter: five words or fewer.'};if(!/[.!]\s*$/.test(t.trim()))return{ok:false,msg:'End with a full stop.'};return{ok:true,msg:'Short and sharp. This gives the reader a pause before the list builds up.'}}},
+{lv:'core',t:'Say how many layers there are',bank:'count',task:'Write a simple sentence that counts the details in your chosen track.',frame:'There were ___ layers / signs of ___.',hint:'Choose a number from two to twelve. Use “layers of noise”, “signs of chaos” or “layers of discomfort”.',reveal:'A full answer is a simple sentence with a number and either “layers” or “signs”. Match the number to the details you will list next.',
+ check:t=>{if(!/\b(?:layers?|signs?)\b/i.test(t))return{ok:false,msg:'Use “layers” or “signs” to introduce the number of details.'};if(stated()===null)return{ok:false,msg:'Write the number of layers, for example seven.'};if(words(t).length<5)return{ok:false,msg:'Write a full simple sentence.'};return{ok:true,msg:'Good. You have counted '+stated()+' details. List exactly '+stated()+'.'}}},
+{lv:'core',t:'Add the colon and list the layers',task:'Add a colon, then list the details from least alarming to most alarming. Separate them with commas and put “and” before the last.',frame:'There were ___ layers / signs of ___: a ___, a ___, a ___, a ___, a ___, a ___ and a ___.',hint:'Everything before the colon must be a complete sentence. Do not put the colon straight after “were”. Save your worst layer for last.',bank:'ideas',reveal:'Pattern: [complete sentence saying how many layers]: [layer], [layer], [layer] and [layer]. The words before the colon must work as a sentence on their own. Commas separate the layers. “and” goes before the last one. The number of layers matches step 4. Each layer is a little worse than the one before. It ends with a full stop.',
+ check:t=>{const i=t.indexOf(':');if(i<0)return{ok:false,msg:'You need a colon (:) after your first sentence.'};const before=t.slice(0,i).trim();if(words(before).length<4||/\b(were|was|is|are|of|a|the)$/i.test(before))return{ok:false,msg:'The words before the colon must be a complete sentence. Do not end it with “were”, “of” or “a”.'};const it=items(t);if(it.length<2)return{ok:false,msg:'List at least two layers after the colon, separated by commas.'};if(!/\sand\s/i.test(listPart(t)))return{ok:false,msg:'Put “and” before the last layer.'};const n=stated();if(n&&it.length!==n)return{ok:false,msg:'Your count says '+n+' details but your list has '+it.length+'. Change the number or the list.'};if(!/[.!]\s*$/.test(t.trim()))return{ok:false,msg:'End with a full stop.'};return{ok:true,msg:'Colon, list and “and”: correct. You listed '+it.length+' layers. Check the order: is the last one the worst?'}}},
+{lv:'core',t:'Add a describing word before each noun',task:'Make each layer stronger with a describing word before the noun. Make the words get stronger as the list goes on.',frame:'a ___ (describing word) ___ (noun)',hint:'Use the word bank. Pick words that are specific and a little unpleasant.',bank:'desc',reveal:'A full answer has a describing word before every noun, so “a dog” becomes “a [describing word] dog”. Choose specific, slightly unpleasant words from the bank, and let them get stronger towards the end.',
+ check:t=>{const it=items(t);if(it.length<2)return{ok:false,msg:'Keep your colon and your list.'};const short=it.filter(x=>words(x).length<3);if(short.length)return{ok:false,msg:'These need a describing word: '+short.map(x=>'“'+x+'”').join(', ')+'.'};return{ok:true,msg:'Every layer has a describing word.'}}},
+{lv:'extend',t:'Use a hyphenated adjective',bank:'hyphen',task:'In the first three details, use hyphenated adjectives before the nouns.',frame:'a ___-___-___ ___',hint:'Join the words that describe the noun, for example “…-on-…” or “…-in-the-…”.',reveal:'A hyphenated adjective joins two or more words with hyphens to describe one noun. Pattern: a [word]-[word] [noun]. Put at least one in the first group of your list.',
+ check:t=>/\b[\w’']+-[\w’']+/.test(listPart(t))?{ok:true,msg:'A hyphenated adjective: well done.'}:{ok:false,msg:'Put a hyphenated adjective (words joined with hyphens) inside your list.'}},
+{lv:'extend',t:'Use possessive phrases',bank:'possessive',task:'In the last four details, use possessive phrases to show whose each detail is.',frame:'a ___’s ___',hint:'Whose is it? An animal’s or a person’s? Add ’s to show it belongs to them.',reveal:'A possessive phrase uses an apostrophe and s to show who something belongs to. Pattern: a [creature or person]’s [noun]. Put these in the second group of your list.',
+ check:t=>/\b(?!(?:it|he|she|that|there|what|who|let|here)\b)[A-Za-z]+[’']s\s+[A-Za-z]+/i.test(listPart(t))?{ok:true,msg:'A possessive phrase: well done.'}:{ok:false,msg:'Add a possessive, for example “a rat’s scrabble”. Whose is the layer?'}},
+{lv:'extend',t:'Use a semicolon between two groups',task:'Split your list into two groups with a semicolon.',frame:'…, …, …; …, … and …',hint:'Put the hyphenated group first, then a semicolon, then the possessive group.',reveal:'A semicolon separates two groups inside the list. Pattern: [group one]; [group two]. The hyphenated group goes first, then the semicolon, then the possessive group. “and” still goes before the very last layer.',
+ check:t=>{const l=listPart(t),i=l.indexOf(';');if(i<0)return{ok:false,msg:'Add a semicolon (;) between your two groups.'};if(!l.slice(0,i).trim()||!l.slice(i+1).trim())return{ok:false,msg:'Put layers on both sides of the semicolon.'};return{ok:true,msg:'A semicolon splits your list into two groups.'}}},
+];
+const EXQ=[{q:'<b>1.</b> What must come before a colon that introduces a list?',o:['A complete sentence','The word “were”','A comma'],c:0,a:'A complete sentence must come before the colon.'},{q:'<b>2.</b> Which word goes before the last item in a list?',o:['and','a colon','a semicolon'],c:0,a:'Put “and” before the last item, with commas between the others.'}];
+const L_ID1='Identify 1: What job does each sentence do?',L_ID2='Identify 2: Grammar features in the list sentence',L_FINAL='Final paragraph',L_E3='Exit ticket 3: Name one thing you did to build tension',L_CONF='Exit ticket 4: How confident am I about using a colon before a list?',L_SC='Success criteria I ticked (numbers)';
+const stepLabel=n=>'Step '+n+': '+STEPS[n-1].t;
+const exLabel=i=>'Exit ticket '+(i+1)+': '+EXQ[i].q.replace(/<[^>]+>/g,'').replace(/^\d+\.\s*/,'');
+const labelOf=k=>k==='id1'?L_ID1:k==='id2'?L_ID2:stepLabel(+k);
+const KEYS=['id2',...STEPS.map((s,i)=>String(i+1))];
+function layout(){const L=[{label:L_ID2,group:'Grammar',width:260,note:'How many grammar features the student found in the list sentence.'}];
+ STEPS.forEach((s,i)=>L.push({label:stepLabel(i+1),group:'Recreate',width:i===0?210:(i>=4&&i<=8?360:250),note:s.task}));
+ L.push({label:L_FINAL,group:'Final paragraph',width:460,note:'The joined paragraph the student submitted.'});
+ L.push({label:exLabel(0),group:'Exit ticket',width:150},{label:exLabel(1),group:'Exit ticket',width:150},{label:L_E3,group:'Exit ticket',width:260},{label:L_CONF,group:'Exit ticket',width:110},{label:L_SC,group:'Exit ticket',width:130});return L}
+const CONF={1:'Not yet',2:'Nearly',3:'Yes'};
+const doneSet=new Set(),subm={},checkedText={},attempts={},exAns={},sel1={},marks={};
+let activeF=null;
+/* ---------- build the nine step cards ---------- */
+const stepsHost=$('#steps');
+if(!stepsHost.querySelector("section[id^=step]"))STEPS.forEach((s,i)=>{const n=i+1;const sec=document.createElement('section');sec.id='step'+n;sec.dataset.key=String(n);
+ let body=`<h2><span>Step ${n}: ${s.t}</span><span class="tag ${s.lv}">${s.lv.toUpperCase()}</span></h2><div class="task">${esc(s.task)}</div><div class="odile hide" id="od${n}"></div>`;
+ if(s.custom){body+=`<div class="row"><div><label class="f" for="hero_name">Choose or invent a hero</label><input type="text" id="hero_name" data-save="hero" placeholder="Type your own idea"></div><div><label class="f" for="hero_place">Choose or invent a place</label><input type="text" id="hero_place" data-save="place" placeholder="Type your own idea"></div><div><label class="f" for="hero_sense">Choose the first warning</label><select id="hero_sense" data-save="sense"><option value="">Choose a sense</option><option value="sound">sound / noise</option><option value="sight">sight / chaos</option><option value="touch">touch / discomfort</option></select></div></div><details class="bank scaf"><summary>Optional idea bank · click a word to use it</summary><p style="margin:5px 0"><b>Heroes:</b> <button type="button" class="wd" data-pick="hero_name" data-value="Mina">Mina</button><button type="button" class="wd" data-pick="hero_name" data-value="A young explorer">a young explorer</button><button type="button" class="wd" data-pick="hero_name" data-value="Sam">Sam</button><button type="button" class="wd" data-pick="hero_name" data-value="The lighthouse keeper">the lighthouse keeper</button></p><p style="margin:5px 0"><b>Places:</b> <button type="button" class="wd" data-pick="hero_place" data-value="an empty station">an empty station</button><button type="button" class="wd" data-pick="hero_place" data-value="a forest at dusk">a forest at dusk</button><button type="button" class="wd" data-pick="hero_place" data-value="an old house">an old house</button><button type="button" class="wd" data-pick="hero_place" data-value="a boat in thick fog">a boat in thick fog</button></p><p style="margin:5px 0"><b>Senses:</b> <button type="button" class="wd" data-pick="hero_sense" data-value="sound">sound / noise</button><button type="button" class="wd" data-pick="hero_sense" data-value="sight">sight / chaos</button><button type="button" class="wd" data-pick="hero_sense" data-value="touch">touch / discomfort</button></p></details>`}
+ else{body+=`<div class="frame scaf"><small>SCAFFOLD</small>${esc(s.frame)}</div>`;
+  if(s.bank)body+=`<details class="bank scaf"><summary>Optional idea bank · click a word to use it</summary><div id="bank${n}"></div></details>`;
+  if(n>=5)body+=`<div class="buttons"><button class="action secondary" data-prev="${n}">Start from my last version</button></div>`;
+  body+=`<textarea id="s${n}" data-save="s${n}" aria-label="Your answer for step ${n}" placeholder="Write here…"></textarea>`}
+ body+=`<div class="buttons"><button class="action" data-check="${n}">1. Check</button><button class="action submit" data-submit="${n}" disabled>2. Submit</button><button class="action secondary" data-hint="${n}">Hint</button><button class="action reveal hide" data-reveal="${n}">Reveal answer</button></div><div class="st" id="st${n}" aria-live="polite"></div><div class="feedback" id="fb${n}" aria-live="polite"></div><div class="revealbox hide" id="rv${n}"></div>`;
+ sec.innerHTML=body;stepsHost.append(sec)});
+function renderBank(){STEPS.forEach((s,i)=>{const n=i+1,el=$('#bank'+n);if(!el||!s.bank)return;const sense=getSense(),b=BANK[sense]||BANK.sound;const ideas=(STEP_SENSE_IDEAS[sense]||{})[s.bank];
+ if(ideas)el.innerHTML='<b>Optional '+esc(sense)+' ideas. Click to add:</b><div class="idea-options">'+ideas.map(w=>`<button type="button" class="wd">${esc(w)}</button>`).join('')+'</div>';
+ else if(s.bank==='ideas')el.innerHTML='<b>Optional '+esc(sense)+' details. Click to add:</b><div class="idea-options">'+b.ideas.map(w=>`<button type="button" class="wd">${esc(w)}</button>`).join('')+'</div>';
+ else el.innerHTML='<b>Optional '+esc(sense)+' describing words. Click to add:</b><div class="idea-options">'+b.desc.map(d=>`<button type="button" class="wd">${esc(d[0])} <i>(${esc(d[1])})</i></button>`).join('')+'</div>'});}
+renderBank();$('#hero_sense').addEventListener('change',renderBank);
+/* ---------- Odile: reading, identification, references ---------- */
+let ROLEFIX=ROLES_OVERRIDE;
+function parseOdile(){SENTS=ODILE?splitSentences(ODILE):[];ROLES=SENTS.length?detectRoles(SENTS):[];
+ const o=ROLEFIX.split(',').map(x=>x.trim().toLowerCase()).filter(Boolean);if(o.length===SENTS.length&&o.every(x=>ROLE_LABEL[x]))ROLES=o;buildGrams()}
+function renderReading(){const box=$('#orig');
+ if(!SENTS.length){box.innerHTML='<div class="placeholder">Odile’s paragraph will appear here.</div>';$('#secid2').classList.add('hide');return}
+ box.innerHTML=SENTS.map((s,i)=>`<span><span class="badge">${i+1}</span>${esc(s)}</span>`).join(' ')}
+function renderDiscovery(){const host=$('#discover');if(!host)return;const prompts=[['hint','Which sentence first makes you expect trouble?'],['short','Which sentence shows Odile reacting?'],['list','Which sentence opens the build-up?']];host.innerHTML=prompts.map(([role,q],n)=>`<div class="sc" data-discover="${role}"><b>${q}</b><div class="chips" role="group" aria-label="Choose a sentence for prompt ${n+1}">${SENTS.map((t,i)=>`<button type="button" class="chip" data-discover-sent="${i}" aria-pressed="false">${i+1}. ${esc(t)}</button>`).join('')}</div><div class="sfb" aria-live="polite"></div></div>`).join('')}
+function renderId1(){const h=$('#id1list');h.innerHTML=SENTS.map((s,i)=>`<div class="sc" data-i="${i}"><div><span class="badge">${i+1}</span>${esc(s)}</div><div class="chips" role="group" aria-label="Job of sentence ${i+1}">${ROLE_OPTS.map(o=>`<button type="button" class="chip" data-role="${o[0]}" aria-pressed="${sel1[i]===o[0]}">${o[1]}</button>`).join('')}</div><div class="sfb" aria-live="polite"></div></div>`).join('')}
+let LTOK=[],LFEAT={};
+function renderId2(){const s=sentOf('list');if(!s){$('#secid2').classList.add('hide');return}$('#secid2').classList.remove('hide');
+ const parts=partsOf(s);LTOK=parts.filter(p=>!isSp(p));LFEAT=featuresOf(LTOK);
+ const present=FEATS.filter(f=>LFEAT[f.id].length);if(!present.find(f=>f.id===activeF))activeF=present.length?present[0].id:null;
+ $('#fchips').innerHTML=present.map(f=>`<button type="button" class="fchip" data-f="${f.id}" aria-pressed="${f.id===activeF}">${f.n} ${f.name}</button>`).join('');
+ let k=-1;$('#id2text').innerHTML=parts.map(p=>{if(isSp(p))return p;k++;const m=marks[k];const f=m?FEATS.find(x=>x.id===m):null;return `<span class="tok" role="button" tabindex="0" data-t="${k}"${f?` data-n="${f.n}"`:''}>${esc(p)}</span>`}).join('')}
+function markRef(s,ids){const parts=partsOf(s),toks=parts.filter(p=>!isSp(p)),F=featuresOf(toks),set=new Set();ids.forEach(id=>F[id].forEach(k=>set.add(k)));let k=-1;return parts.map(p=>{if(isSp(p))return p;k++;return set.has(k)?'<mark>'+esc(p)+'</mark>':esc(p)}).join('')}
+function fillRefs(){const hint=sentOf('hint'),short=sentOf('short'),L=sentOf('list'),th=sentOf('threat');const R={};
+ if(hint)R[2]=['Odile’s hint sentence',esc(hint)];if(short)R[3]=['Odile’s short sentence',esc(short)];
+ if(L){const ci=L.indexOf(':');if(ci>0)R[4]=['Odile’s count sentence, up to the colon',esc(L.slice(0,ci))+'<mark>:</mark>'];R[5]=['Odile’s list sentence (colon and “and” marked)',markRef(L,['colon','and'])];R[6]=['Odile’s list sentence',esc(L)];R[7]=['Odile’s hyphenated adjectives are marked',markRef(L,['hyph'])];R[8]=['Odile’s possessives are marked',markRef(L,['poss'])];R[9]=['Odile’s semicolon is marked',markRef(L,['semi'])]}
+ if(th)R[10]=['Odile’s whispered threat',esc(th)];
+ for(let n=2;n<=9;n++){const el=$('#od'+n);if(!el)continue;if(R[n]){el.innerHTML='<b>'+R[n][0]+':</b> '+R[n][1];el.classList.remove('hide')}else{el.innerHTML='';el.classList.add('hide')}}
+ $('#cmpOdile').textContent=ODILE||'(Odile’s paragraph has not been added yet.)'}
+function rebuildOdile(){parseOdile();renderReading();renderDiscovery();renderId1();renderId2();fillRefs();updateCmp()}
+function updateCmp(){$('#cmpMine').textContent=$('#final').value.trim()||'(Your paragraph will show here.)'}
+/* ---------- answers ---------- */
+const ROLE_NAME=r=>ROLE_LABEL[r];
+function featStatus(){const out={};FEATS.forEach(f=>{const T=LFEAT[f.id]||[];if(!T.length)return;const got=Object.keys(marks).filter(k=>marks[k]===f.id).map(Number);out[f.id]={found:got.filter(k=>T.includes(k)).length,wrong:got.filter(k=>!T.includes(k)).length,total:T.length}});return out}
+function answerFor(key){
+ if(key==='1'){const h=$('#hero_name').value.trim(),p=$('#hero_place').value.trim(),sense=$('#hero_sense').value;return h||p||sense?'Hero: '+h+' | Place: '+p+' | Sense: '+(sense||'(not chosen)'):''}
+ if(key==='id1'){if(!Object.keys(sel1).length)return'';return SENTS.map((s,i)=>(i+1)+': '+(sel1[i]?ROLE_NAME(sel1[i])+(sel1[i]===ROLES[i]?' ✓':' ✗'):'(blank)')).join(' | ')}
+ if(key==='id2'){if(!Object.keys(marks).length)return'';const st=featStatus();return FEATS.filter(f=>st[f.id]).map(f=>f.name+': '+st[f.id].found+'/'+st[f.id].total+(st[f.id].wrong?' (+'+st[f.id].wrong+' wrong)':'')).join(' | ')}
+ return $('#s'+key).value.trim()}
+function fb(key,msg,cls){const f=$('#fb'+key);f.className='feedback '+(cls||'');f.textContent=msg}
+function progress(){$('#prog').textContent='Submitted: '+KEYS.filter(k=>subm[k]!==undefined).length+' of '+KEYS.length}
+function unlock(key){$$(`[data-reveal="${key}"]`).forEach(b=>b.classList.remove('hide'))}
+const savedMsg=()=>SHEET_URL?'✓ Submitted.':'✓ Saved on this device.';
+function refreshSubmit(key){const t=answerFor(key),b=$(`[data-submit="${key}"]`),hist=attempts[key]||[];if(b)b.disabled=!(t&&hist[hist.length-1]!==t);const st=$('#st'+key);if(!st)return;
+ if(!hist.length){st.textContent=t?'Ready to submit your first attempt. You do not need to Check first.':'';st.className='st'}
+ else if(hist[hist.length-1]===t){st.textContent=savedMsg()+' Attempt '+hist.length+' saved.';st.className='st'}
+ else{st.textContent='New version ready. Submit it to keep this as attempt '+(hist.length+1)+'.';st.className='st warn'}}
+function syncFinal(){const s=$('#stFinal');if(subm.final===undefined){s.textContent='';s.className='st'}else if(subm.final===$('#final').value.trim()){s.textContent=savedMsg();s.className='st'}else{s.textContent='You have changed this since you submitted it. Submit again to update.';s.className='st warn'}}
+/* ---------- sending ---------- */
+async function sendAnswers(answers){
+ const name=$('#sn').value.trim(),cls=$('#sc').value.trim();
+ if(!name||!cls){$('#sn').scrollIntoView({block:'center'});$('#sn').focus();return{ok:false,err:'Please type your first name and class at the top first.'}}
+ if(!SHEET_URL)return{ok:true,local:true};
+ const L=layout(),notes={};L.forEach(c=>{if(c.note)notes[c.label]=c.note});
+ const body=JSON.stringify({tab:ASSIGNMENT,name,class:cls,layout:L,questions:L.map(c=>c.label),notes,answers});
+ const H={'Content-Type':'text/plain;charset=utf-8'};
+ try{const r=await fetch(SHEET_URL,{method:'POST',headers:H,body});let j=null;try{j=await r.json()}catch(e){}
+  if(j&&j.ok===false)return{ok:false,err:'The sheet reported a problem: '+(j.error||'unknown')+'. Tell your teacher.'};
+  return{ok:true,confirmed:!!(j&&j.ok)}}
+ catch(e){try{await fetch(SHEET_URL,{method:'POST',mode:'no-cors',headers:H,body});return{ok:true,confirmed:false}}catch(e2){return{ok:false,err:'Could not send. Check your internet and try again.'}}}}
+/* ---------- check / submit ---------- */
+function checkId1(){if(!SENTS.some((s,i)=>sel1[i])){fb('id1','Choose a job for each sentence first.','');return null}
+ const miss=SENTS.filter((s,i)=>!sel1[i]).length;let right=0;
+ $$('#id1list .sc').forEach(c=>{const i=+c.dataset.i,f=$('.sfb',c);if(!sel1[i]){f.className='sfb';f.textContent='';return}
+  if(sel1[i]===ROLES[i]){right++;f.className='sfb good';f.textContent='✓ '+ROLE_INFO[ROLES[i]]}else{f.className='sfb bad';f.textContent='✗ Not this one yet. Look at the length and the punctuation, then try again.'}});
+ return{ok:right===SENTS.length&&!miss,msg:right+' of '+SENTS.length+' sentences are right.'+(miss?' '+miss+' still blank.':'')}}
+function checkId2(){if(!Object.keys(marks).length){fb('id2','Pick a feature, then tap the words that show it.','');return null}
+ const st=featStatus();let all=true;const lines=[];let info='';
+ FEATS.forEach(f=>{const s=st[f.id];if(!s)return;const good=s.found===s.total&&!s.wrong;if(!good)all=false;
+  lines.push((good?'✓ ':'✗ ')+f.name+': '+s.found+' of '+s.total+' found'+(s.wrong?', '+s.wrong+' wrong':''));
+  if(good)info+='<p style="margin:4px 0"><b>'+esc(f.name)+'.</b> '+esc(f.info)+'</p>'});
+ $('#id2info').innerHTML=info;return{ok:all,msg:lines.join('  ·  ')}}
+function check(key){let r;
+ if(key==='id1')r=checkId1();else if(key==='id2')r=checkId2();
+ else{const s=STEPS[+key-1],t=answerFor(key);if(!t){fb(key,'Write your answer first, then press Check.','');return}
+  if(s.custom){const h=$('#hero_name').value.trim(),p=$('#hero_place').value.trim(),sense=$('#hero_sense').value;r=h&&p&&sense?{ok:true,msg:'Good. You have chosen '+h+', in '+p+', and the first warning comes through '+sense+'. What effect will that have on your reader?'}:{ok:false,msg:'Choose or invent a hero, a place and one sense. The idea bank can help, but you can also write your own.'}}
+  else{r=s.check(t);if(r.ok&&ODILE&&copied(t))r={ok:false,msg:'Eight or more words in a row are exactly Odile’s. Keep her structure but use your own idea and your own words.'}}}
+ if(!r)return;
+ fb(key,(r.ok?'✓ ':'✗ ')+r.msg+' You can submit this version now, or revise it first.',r.ok?'good':'bad');
+ const sec=document.querySelector(`[data-key="${key}"]`);if(sec)sec.classList.toggle('done',!!r.ok);
+ if(r.ok)doneSet.add(key);else doneSet.delete(key);checkedText[key]=answerFor(key);refreshSubmit(key);save()}
+async function submitKey(key){const t=answerFor(key);if(!t){fb(key,'Add an answer first, then submit it. You can Check before or after.','bad');return}
+ const hist=attempts[key]||(attempts[key]=[]);if(hist[hist.length-1]===t){fb(key,'This version is already saved. Change your answer to submit another attempt.','');return}
+ hist.push(t);const record=hist.map((v,i)=>'Attempt '+(i+1)+': '+v).join('\n');
+ const b=$(`[data-submit="${key}"]`);b.disabled=true;$('#st'+key).textContent='Sending…';
+ const r=await sendAnswers({[labelOf(key)]:record});
+ if(!r.ok){hist.pop();fb(key,'✗ '+r.err,'bad');refreshSubmit(key);return}
+ subm[key]=t;unlock(key);fb(key,'✓ Submitted. Attempt '+hist.length+' is saved. You can Check now, or revise and submit another attempt.','good');refreshSubmit(key);progress();save()}
+function doReveal(key){const box=$('#rv'+key);
+ if(key==='id1'){box.innerHTML='<b>The answers:</b><br>'+SENTS.map((s,i)=>(i+1)+': '+esc(ROLE_NAME(ROLES[i]))).join('<br>')}
+ else if(key==='id2'){FEATS.forEach(f=>(LFEAT[f.id]||[]).forEach(k=>marks[k]=f.id));renderId2();box.innerHTML='<b>The features are now marked for you.</b> Press Check to see why each one matters.'}
+ else{const track=getSense(),name={sound:'sound',sight:'sight / chaos',touch:'touch / discomfort'}[track]||track,examples=STEP_SNIPPETS[key]||{};box.innerHTML='<b>'+esc(name)+' model answer:</b> '+esc(examples[track]||'Use the words you chose to make a complete answer.')+'<br><b>Why it works:</b> '+esc(STEP_WHY[key]||'It follows the step’s instructions.');}
+ box.classList.remove('hide')}
+function doHint(key){if(key==='id1')return fb(key,'Hint: the first sentence, the shortest one, the one with a colon, and the one in speech marks each do a different job.','');
+ if(key==='3'){const h={sound:'Sami stopped. Try a brief pause or listening reaction.',sight:'Maya froze. Try a stillness or noticing reaction.',touch:'Maya flinched. Try a brief physical reaction.'}[getSense()];return fb(key,'Hint: '+h,'')}
+ if(key==='id2'){const st=featStatus();const todo=FEATS.filter(f=>st[f.id]&&!(st[f.id].found===st[f.id].total&&!st[f.id].wrong));return fb(key,'Hint: '+(todo.length?todo.map(f=>f.name+': '+f.hint).join('  ·  '):'you have them all. Press Check.'),'')}
+ fb(key,'Hint: '+STEPS[+key-1].hint,'')}
+document.addEventListener('click',e=>{
+ const pick=e.target.closest('[data-pick]');if(pick){const el=$('#'+pick.dataset.pick);if(el){el.value=pick.dataset.value;el.dispatchEvent(new Event('input',{bubbles:true}));el.dispatchEvent(new Event('change',{bubbles:true}));}return}
+ const w=e.target.closest('.wd');if(w){const ta=w.closest('section').querySelector('textarea');if(!ta)return;const word=w.childNodes[0].textContent.trim();const s=ta.selectionStart??ta.value.length;ta.value=ta.value.slice(0,s)+word+ta.value.slice(ta.selectionEnd??s);ta.focus();ta.selectionStart=ta.selectionEnd=s+word.length;ta.dispatchEvent(new Event('input',{bubbles:true}));return}
+ const db=e.target.closest('[data-discover-sent]');if(db){const card=db.closest('[data-discover]'),role=card.dataset.discover,i=+db.dataset.discoverSent;$$('.chip',card).forEach(b=>b.setAttribute('aria-pressed',b===db));const f=$('.sfb',card);const ok=ROLES[i]===role;f.className='sfb '+(ok?'good':'bad');f.textContent=ok?'✓ That’s the moment.':'Not quite—try another sentence.';return}
+ const ch=e.target.closest('.chip[data-role]');if(ch){const i=+ch.closest('.sc').dataset.i;sel1[i]=ch.dataset.role;$$('.chip',ch.parentNode).forEach(c=>c.setAttribute('aria-pressed',c===ch));const f=$('.sfb',ch.closest('.sc'));f.textContent='';f.className='sfb';refreshSubmit('id1');save();return}
+ const fc=e.target.closest('.fchip');if(fc){activeF=fc.dataset.f;$$('.fchip').forEach(c=>c.setAttribute('aria-pressed',c===fc));return}
+ const tk=e.target.closest('.tok');if(tk&&activeF){const k=+tk.dataset.t;if(marks[k]===activeF)delete marks[k];else marks[k]=activeF;const f=FEATS.find(x=>x.id===marks[k]);if(f)tk.dataset.n=f.n;else delete tk.dataset.n;refreshSubmit('id2');save();return}
+ const c=e.target.closest('[data-check]');if(c)return check(c.dataset.check);
+ const sb=e.target.closest('[data-submit]');if(sb)return submitKey(sb.dataset.submit);
+ const h=e.target.closest('[data-hint]');if(h)return doHint(h.dataset.hint);
+ const rv=e.target.closest('[data-reveal]');if(rv)return doReveal(rv.dataset.reveal);
+ const p=e.target.closest('[data-prev]');if(p){const n=+p.dataset.prev;const prev=$('#s'+(n-1));if(prev&&prev.value.trim()){$('#s'+n).value=prev.value;$('#s'+n).dispatchEvent(new Event('input',{bubbles:true}));fb(String(n),'Copied your last version. Now improve it.','')}else fb(String(n),'Finish the step before this one first.','bad')}});
+document.addEventListener('keydown',e=>{if((e.key==='Enter'||e.key===' ')&&e.target.classList?.contains('tok')){e.preventDefault();e.target.click()}});
+function keyOf(el){const s=el.closest('[data-key]');return s?s.dataset.key:null}
+document.addEventListener('input',e=>{const k=keyOf(e.target);if(k)refreshSubmit(k);if(e.target.id==='final'){syncFinal();updateCmp()}save()});
+document.addEventListener('change',e=>{const k=keyOf(e.target);if(k)refreshSubmit(k);save()});
+$('#scafToggle').onclick=()=>{const on=document.body.classList.toggle('noscaf');$('#scafToggle').setAttribute('aria-pressed',on);$('#scafToggle').textContent=on?'Show the scaffolds again':'Challenge me: hide the scaffolds'};
+/* ---------- put it together ---------- */
+function assemble(){const g=id=>($('#'+id)?.value||'').trim();const list=[g('s9'),g('s8'),g('s7'),g('s6'),g('s5')].find(Boolean)||'';
+ const intro=[g('s2'),g('s3'),list].filter(Boolean).join(' ');return intro}
+$('#joinBtn').onclick=()=>{const t=assemble(),f=$('#finalFb');f.className='feedback';if(!t){f.textContent='Complete some steps first.';return}$('#final').value=t;$('#final').dispatchEvent(new Event('input',{bubbles:true}));f.textContent='Joined. Read it aloud, edit anything that does not sound right, then press Submit my paragraph.'};
+$('#finalSubmit').onclick=async()=>{const t=$('#final').value.trim(),f=$('#finalFb');
+ if(words(t).length<12){f.className='feedback bad';f.textContent='Write or join your paragraph first (at least a few sentences).';return}
+ const hist=attempts.final||(attempts.final=[]);if(hist[hist.length-1]===t){f.className='feedback';f.textContent='This paragraph version is already saved.';return}hist.push(t);
+ $('#finalSubmit').disabled=true;const record=hist.map((v,i)=>'Attempt '+(i+1)+': '+v).join('\n');const r=await sendAnswers({[L_FINAL]:record});$('#finalSubmit').disabled=false;
+ if(!r.ok){hist.pop();f.className='feedback bad';f.textContent='✗ '+r.err;return}
+ subm.final=t;f.className='feedback good';f.textContent='✓ Paragraph attempt '+hist.length+' submitted.';syncFinal();revealFinalModels();save()};
+const MODEL_PARAGRAPHS={
+ 'Sound — railway station':'The first hint that something was wrong was the noise. Sami stopped. There were seven layers of noise, each more alarming than the last: a wind-rattled window, a high-pitched hinge squeak, a hollow-sounding floorboard groan; a stationmaster’s panicked whistle, a train’s warning screech, a passenger’s desperate scream and a child’s blood-curdling cry.',
+ 'Sight — chaos in an empty house':'The first hint that something was wrong was the chaos. Maya froze. There were seven signs of chaos, each more alarming than the last: a half-open door, a paint-splattered wall, a floor-strewn room; a child’s scattered toys, a visitor’s muddy footprints, a burglar’s overturned drawers and a stranger’s bloodied handprint.',
+ 'Touch — discomfort in an empty house':'The first hint that something was wrong was the cold. Maya flinched. There were seven layers of discomfort, each more alarming than the last: a frost-cold banister, a needle-sharp splinter, a skin-prickling draught; a spider’s bristling legs, a stranger’s clammy sleeve, a corpse’s icy fingers and a creature’s hot breath against her ear.'
+};
+const STEP_SNIPPETS={
+ '1':{sound:'Sami · an abandoned railway station · noise',sight:'Maya · an empty house · chaos',touch:'Maya · an empty house · discomfort'},
+ '2':{sound:'The first hint that something was wrong was the noise.',sight:'The first hint that something was wrong was the chaos.',touch:'The first hint that something was wrong was the cold.'},
+ '3':{sound:'Sami stopped.',sight:'Maya froze.',touch:'Maya flinched.'},
+ '4':{sound:'There were seven layers of noise.',sight:'There were seven signs of chaos.',touch:'There were seven layers of discomfort.'},
+ '5':{sound:'There were seven layers of noise: a window rattle, a hinge squeak, a floorboard groan, a whistle, a screech, a scream and a cry.',sight:'There were seven signs of chaos: a half-open door, a splattered wall, a strewn room, scattered toys, muddy footprints, overturned drawers and a bloodied handprint.',touch:'There were seven layers of discomfort: a cold banister, a sharp splinter, a prickling draught, bristling legs, a clammy sleeve, icy fingers and hot breath.'},
+ '6':{sound:'A wind-rattled window, a high-pitched hinge squeak, a hollow-sounding floorboard groan; a stationmaster’s panicked whistle, a train’s warning screech, a passenger’s desperate scream and a child’s blood-curdling cry.',sight:'A half-open door, a paint-splattered wall, a floor-strewn room; a child’s scattered toys, a visitor’s muddy footprints, a burglar’s overturned drawers and a stranger’s bloodied handprint.',touch:'A frost-cold banister, a needle-sharp splinter, a skin-prickling draught; a spider’s bristling legs, a stranger’s clammy sleeve, a corpse’s icy fingers and a creature’s hot breath.'},
+ '7':{sound:'wind-rattled, high-pitched and hollow-sounding describe the first three sound details.',sight:'half-open, paint-splattered and floor-strewn describe the first three signs of chaos.',touch:'frost-cold, needle-sharp and skin-prickling describe the first three sensations.'},
+ '8':{sound:'stationmaster’s, train’s, passenger’s and child’s introduce the final four sounds.',sight:'child’s, visitor’s, burglar’s and stranger’s introduce the final four signs of chaos.',touch:'spider’s, stranger’s, corpse’s and creature’s introduce the final four sensations.'},
+ '9':{sound:'Three station sounds; then four human sounds.',sight:'Three signs of disorder; then four more alarming traces.',touch:'Three surface sensations; then four direct-contact details.'},
+};
+const STEP_WHY={
+ '1':'Each choice sets up a character, place and sense for the scene.',
+ '2':'The clue comes before the explanation, so the reader senses trouble first.',
+ '3':'A brief reaction lets the reader pause with the character.',
+ '4':'The number makes the reader anticipate a sequence.',
+ '5':'A colon opens the list; commas and “and” organise its items.',
+ '6':'Specific describing words help the reader imagine each layer.',
+ '7':'A hyphenated adjective packs a compact description before a noun.',
+ '8':'Possessive phrases connect details to creatures or people.',
+ '9':'The semicolon groups the list while the build-up continues.',
+};
+function revealFinalModels(){const host=$('#fullModels');if(!host)return;host.innerHTML=Object.entries(MODEL_PARAGRAPHS).map(([sense,text])=>`<div class="sc"><b>${sense}</b><br>${esc(text)}</div>`).join('');$('#modelEnd').classList.remove('hide')}
+const SPOT=['A hint sentence names the selected focus and says it is the first sign','A very short sentence shows the character using the sense','A simple sentence counts the layers or signs','A colon introduces the list','Commas separate the layers, with “and” before the last','Describing words come before the nouns','The layers get worse as the list goes on','Hyphenated adjectives in the first group','Possessive phrases in the second group','A semicolon splits the list into two groups'];
+$('#spot').innerHTML=SPOT.map((s,i)=>`<li><label><input type="checkbox" data-save="spot${i}"> ${s}</label></li>`).join('');
+/* ---------- exit ticket ---------- */
+$('#exitq').innerHTML=EXQ.map((q,i)=>`<div class="q" data-i="${i}" style="margin:6px 0"><div>${q.q}</div><div class="buttons">${q.o.map((o,j)=>`<button class="action secondary" data-j="${j}">${o}</button>`).join('')}</div><div class="feedback" aria-live="polite"></div></div>`).join('');
+$('#exitq').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;const q=b.closest('.q'),i=+q.dataset.i,j=+b.dataset.j;exAns[i]=EXQ[i].o[j];const ok=j===EXQ[i].c;const f=$('.feedback',q);f.className='feedback '+(ok?'good':'bad');f.textContent=(ok?'✓ Correct. '+EXQ[i].a:'✗ Not quite. Think about what must be complete before a colon, and what joins the end of a list. Try again.')+' You chose: '+EXQ[i].o[j]+'.';save()});
+$('#exitSubmit').onclick=async()=>{const f=$('#exitFb'),miss=[];
+ if(exAns[0]===undefined)miss.push('question 1');if(exAns[1]===undefined)miss.push('question 2');if(!$('#ex3').value.trim())miss.push('question 3');const cf=$('input[name=conf]:checked');if(!cf)miss.push('question 4');
+ if(miss.length){f.className='feedback bad';f.textContent='Please answer '+miss.join(', ')+' first.';return}
+ const ticked=$$('.lesson-card input[data-save]').map((el,i)=>el.checked?i+1:null).filter(Boolean).join(', ')||'none';
+ $('#exitSubmit').disabled=true;const r=await sendAnswers({[exLabel(0)]:exAns[0],[exLabel(1)]:exAns[1],[L_E3]:$('#ex3').value.trim(),[L_CONF]:CONF[cf.value],[L_SC]:ticked});$('#exitSubmit').disabled=false;
+ if(!r.ok){f.className='feedback bad';f.textContent='✗ '+r.err;return}
+ subm.exit=1;f.className='feedback good';f.textContent=SHEET_URL?'✓ Exit ticket submitted. Well done.':'✓ Saved on this device.';save()};
+/* ---------- autosave on this device ---------- */
+const KEY='buildUpLayersV3';
+function save(){try{const o={};$$('[data-save]').forEach(el=>{o[el.dataset.save]=el.type==='checkbox'||el.type==='radio'?el.checked:el.value});o._done=[...doneSet];o._ex=exAns;o._subm=subm;o._attempts=attempts;o._sel1=sel1;o._marks=marks;localStorage.setItem(KEY,JSON.stringify(o))}catch(e){}}
+function afterRestore(){renderBank();renderId1();renderId2();KEYS.forEach(k=>{if(subm[k]!==undefined){unlock(k);refreshSubmit(k)}});if(subm.final)revealFinalModels();syncFinal();updateCmp();progress()}
+function restore(){try{const o=JSON.parse(localStorage.getItem(KEY)||'null');if(!o)return;
+ $$('[data-save]').forEach(el=>{const v=o[el.dataset.save];if(v===undefined)return;if(el.type==='checkbox'||el.type==='radio')el.checked=!!v;else el.value=v});
+ (o._done||[]).forEach(k=>{doneSet.add(String(k));document.querySelector(`[data-key="${k}"]`)?.classList.add('done')});
+ Object.assign(exAns,o._ex||{});Object.assign(subm,o._subm||{});Object.assign(attempts,o._attempts||{});Object.keys(subm).forEach(k=>{if(!attempts[k])attempts[k]=[subm[k]]});Object.assign(sel1,o._sel1||{});Object.assign(marks,o._marks||{})}catch(e){}}
+rebuildOdile();restore();afterRestore();
+/* ---------- load saved work from the sheet (home / another device) ---------- */
+function splitAttempts(v){const parts=String(v).split(/(?:^|\n)Attempt \d+:\s*/).filter(Boolean);return parts.length?parts:[String(v)]}
+function applyLoaded(a){let n=0;const setIf=(el,v)=>{if(!el.value.trim()){el.value=v;return true}return false};
+ const s1=a[stepLabel(1)];if(s1){const hist=splitAttempts(s1),latest=hist[hist.length-1],m=latest.match(/^Hero: (.*?) \| Place: (.*?) \| Sense: (\w+)/);attempts['1']=hist;if(m){setIf($('#hero_name'),m[1]);setIf($('#hero_place'),m[2]);if(['sound','sight','touch'].includes(m[3]))$('#hero_sense').value=m[3];subm['1']=answerFor('1');n++}}
+ for(let k=2;k<=9;k++){const v=a[stepLabel(k)];if(v){const hist=splitAttempts(v);attempts[String(k)]=hist;setIf($('#s'+k),hist[hist.length-1]);subm[String(k)]=$('#s'+k).value.trim();n++}}
+ if(a[L_FINAL]){const hist=splitAttempts(a[L_FINAL]);attempts.final=hist;setIf($('#final'),hist[hist.length-1]);subm.final=$('#final').value.trim();n++}
+ const i1=a[L_ID1];if(i1&&SENTS.length){const latest=splitAttempts(i1).slice(-1)[0];const rev=Object.fromEntries(ROLE_OPTS.map(o=>[o[1],o[0]]));latest.split(' | ').forEach(p=>{const m=p.match(/^(\d+): (.*?)(?: [✓✗])?$/);if(m&&rev[m[2]]&&SENTS[+m[1]-1]!==undefined&&!sel1[+m[1]-1])sel1[+m[1]-1]=rev[m[2]]});subm.id1=answerFor('id1');n++}
+ if(a[L_E3])setIf($('#ex3'),a[L_E3]);
+ const cf=a[L_CONF];if(cf&&!$('input[name=conf]:checked')){const v=Object.entries(CONF).find(([k,l])=>l===cf);if(v)$(`input[name=conf][value="${v[0]}"]`).checked=true}
+ [0,1].forEach(i=>{if(a[exLabel(i)]&&exAns[i]===undefined)exAns[i]=a[exLabel(i)]});
+ if(a[L_ID2])subm.id2=a[L_ID2];
+ afterRestore();save();return n}
+$('#loadBtn').onclick=async()=>{const f=$('#loadFb'),name=$('#sn').value.trim(),cls=$('#sc').value.trim();
+ if(!name||!cls){f.className='feedback bad';f.textContent='Type your first name and class first.';return}
+ if(!SHEET_URL){f.className='feedback bad';f.textContent='Loading is not available. Your work is still saved on this device.';return}
+ f.className='feedback';f.textContent='Loading…';
+ try{const r=await fetch(SHEET_URL+'?action=load&tab='+encodeURIComponent(ASSIGNMENT)+'&name='+encodeURIComponent(name)+'&class='+encodeURIComponent(cls));const j=await r.json();
+  if(!j.ok){f.className='feedback bad';f.textContent='The sheet reported a problem: '+(j.error||'unknown');return}
+  if(!j.found){f.className='feedback';f.textContent='Nothing saved yet for that name and class.';return}
+  const n=applyLoaded(j.answers);f.className='feedback good';f.textContent='✓ Loaded '+n+' saved answers. Empty boxes were filled; anything you already wrote on this device was kept. Grammar spotting must be redone if you need it.'}
+ catch(e){f.className='feedback bad';f.textContent='Could not load. Check your internet and try again.'}};
+/* ---------- copy / clear ---------- */
+function summaryText(){const lines=['Name: '+$('#sn').value.trim(),'Class: '+$('#sc').value.trim(),''];STEPS.forEach((s,i)=>lines.push(stepLabel(i+1)+'\n'+answerFor(String(i+1))+'\n'));lines.push(L_FINAL+'\n'+$('#final').value.trim());return lines.join('\n')}
+$('#copyBtn').onclick=()=>{const b=$('#copyBox');b.value=summaryText();b.style.display='block';b.select();try{navigator.clipboard.writeText(b.value)}catch(e){}$('#sendFb').className='feedback good';$('#sendFb').textContent='Copied. Paste it where your teacher asked.'};
+$('#clearBtn').onclick=()=>{if(!confirm('Clear ALL your answers on this device? This cannot be undone. Anything you already submitted stays with your teacher.'))return;
+ $$('[data-save]').forEach(el=>{if(el.type==='checkbox'||el.type==='radio')el.checked=false;else if(el.tagName==='SELECT')el.selectedIndex=0;else el.value=''});
+ doneSet.clear();[subm,checkedText,attempts,exAns,sel1,marks].forEach(o=>Object.keys(o).forEach(k=>delete o[k]));
+ $$('.feedback').forEach(f=>{f.textContent='';f.className='feedback'});$$('.st').forEach(s=>{s.textContent='';s.className='st'});$$('.sfb').forEach(s=>{s.textContent='';s.className='sfb'});$('#id2info').innerHTML='';
+ $$('[data-reveal]').forEach(b=>b.classList.add('hide'));$$('.revealbox').forEach(b=>{b.classList.add('hide');b.innerHTML=''});
+ $$('section[data-key]').forEach(s=>s.classList.remove('done'));$$('[data-submit]').forEach(b=>b.disabled=true);
+ $('#copyBox').style.display='none';$('#copyBox').value='';renderBank();renderId1();renderId2();syncFinal();updateCmp();progress();
+ try{localStorage.removeItem(KEY)}catch(e){}
+ $('#sendFb').className='feedback good';$('#sendFb').textContent='All answers cleared.';window.scrollTo({top:0})};
+/* ---------- teacher: preview and save a student copy ---------- */
+if($('#saveCopy')){
+$('#previewBtn').onclick=()=>{const m=$('#modelin').value.trim();if(!m){$('#teacherFb').textContent='Paste Odile’s paragraph first.';return}ODILE=m;ROLEFIX=$('#rolesin').value;Object.keys(sel1).forEach(k=>delete sel1[k]);Object.keys(marks).forEach(k=>delete marks[k]);rebuildOdile();$('#teacherFb').textContent='Previewing with your text: '+SENTS.length+' sentences found, jobs used: '+ROLES.map((r,i)=>(i+1)+'='+r).join(', ')+'. If any job is wrong, type the correct list in the box below and press Preview again. This is not saved until you press Save a student copy.'};
+$('#saveCopy').onclick=()=>{const m=$('#modelin').value.trim(),u=$('#urlin').value.trim(),rf=$('#rolesin').value.trim();
+ if(!m&&!u){$('#teacherFb').textContent='Paste Odile’s paragraph and/or the web app URL first.';return}
+ const e=t=>t.replace(/\\/g,'\\\\').replace(/`/g,'\\`').replace(/\$\{/g,'\\${');
+ let html=PRISTINE.replace(/<details class="teacher">[\s\S]*?<\/details>/,'');
+ if(m)html=html.replace(/const MODEL_TEXT=`(?:\\[\s\S]|[^`\\])*`;/,()=>'const MODEL_TEXT=`'+e(m)+'`;');
+ if(rf)html=html.replace(/const ROLES_OVERRIDE="[^"]*";/,()=>'const ROLES_OVERRIDE='+JSON.stringify(rf)+';');
+ if(u)html=html.replace(/const SHEET_URL="[^"]*";/,()=>'const SHEET_URL='+JSON.stringify(u)+';');
+ const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([html],{type:'text/html'}));a.download='Build-up-layers-student-copy.html';document.body.append(a);a.click();a.remove();
+ $('#teacherFb').textContent='Saved as Build-up-layers-student-copy.html. Give students that file.'};
+}
+</script></body></html>
